@@ -17,6 +17,21 @@ const router = Router();
 // Middleware opcional de autenticação para todas as rotas de páginas
 router.use(optionalAuth);
 
+// Rota específica para servir CSS
+router.get('/css/:filename', (req: Request, res: Response) => {
+  const filename = req.params.filename;
+  const cssPath = path.join(__dirname, '../../public/css', filename);
+  res.setHeader('Content-Type', 'text/css');
+  res.sendFile(cssPath);
+});
+
+// Rota específica para servir imagens
+router.get('/img/:filename', (req: Request, res: Response) => {
+  const filename = req.params.filename;
+  const imgPath = path.join(__dirname, '../../public/img', filename);
+  res.sendFile(imgPath);
+});
+
 // Rotas das páginas
 router.get('/', (req: Request, res: Response) => {
   res.render('home', {

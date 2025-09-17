@@ -12,7 +12,7 @@
     "lint": "eslint .",
     "format": "prettier -w .",
     "build": "tsc && npm run build:css",
-    "postinstall": "npm run prisma:generate",
+    "postinstall": "npm run prisma:generate && npm run build:css",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio"
