@@ -19,13 +19,24 @@
                         Passa a Bola
                     </a>
                 </div>
+                <!-- Desktop Navigation -->
                 <nav class="hidden md:flex space-x-8">
                     <a href="/" class="text-gray-700 hover:text-primary-600">Home</a>
                     <a href="/players" class="text-gray-700 hover:text-primary-600">Jogadoras</a>
                     <a href="/teams" class="text-gray-700 hover:text-primary-600">Times</a>
+                    <a href="/news" class="text-gray-700 hover:text-primary-600">Notícias</a>
                     <a href="/community" class="text-gray-700 hover:text-primary-600">Comunidade</a>
                     <a href="/shop" class="text-gray-700 hover:text-primary-600">Loja</a>
                 </nav>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button type="button" class="mobile-menu-button text-gray-700 hover:text-primary-600 focus:outline-none focus:text-primary-600" aria-label="Menu">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
                 <div class="flex items-center space-x-4">
                     <% if (user) { %>
                         <span class="text-sm text-gray-600">Olá, <%= user.email %></span>
@@ -35,6 +46,18 @@
                         <a href="/register" class="btn btn-primary">Cadastrar</a>
                     <% } %>
                 </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation Menu -->
+        <div class="mobile-menu hidden md:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
+                <a href="/" class="block px-3 py-2 text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md">Home</a>
+                <a href="/players" class="block px-3 py-2 text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md">Jogadoras</a>
+                <a href="/teams" class="block px-3 py-2 text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md">Times</a>
+                <a href="/news" class="block px-3 py-2 text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md">Notícias</a>
+                <a href="/community" class="block px-3 py-2 text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md">Comunidade</a>
+                <a href="/shop" class="block px-3 py-2 text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md">Loja</a>
             </div>
         </div>
     </header>
@@ -54,5 +77,34 @@
             </div>
         </div>
     </footer>
+    
+    <!-- Mobile Menu JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.querySelector('.mobile-menu-button');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                });
+                
+                // Fechar menu ao clicar em um link
+                const mobileLinks = mobileMenu.querySelectorAll('a');
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        mobileMenu.classList.add('hidden');
+                    });
+                });
+                
+                // Fechar menu ao clicar fora
+                document.addEventListener('click', function(event) {
+                    if (!mobileMenuButton.contains(event.target) && !mobileMenu.contains(event.target)) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>

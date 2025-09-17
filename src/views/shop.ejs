@@ -71,96 +71,26 @@
             <p class="text-xl text-gray-600">Os favoritos da nossa comunidade</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Product 1 -->
-            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow">
-                <div class="h-48 bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center">
-                    <span class="text-4xl">👕</span>
-                </div>
-                <div class="p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Camisa Passa a Bola</h3>
-                    <p class="text-gray-600 text-sm mb-4">Camisa oficial da plataforma com design exclusivo</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-2xl font-bold text-primary-600">R$ 89,90</span>
-                        <button class="btn btn-primary">Comprar</button>
-                    </div>
-                </div>
-            </div>
+        <!-- Loading State -->
+        <div id="loadingProducts" class="text-center py-12">
+            <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+            <p class="mt-4 text-gray-600">Carregando produtos...</p>
+        </div>
 
-            <!-- Product 2 -->
-            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow">
-                <div class="h-48 bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center">
-                    <span class="text-4xl">⚽</span>
-                </div>
-                <div class="p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Bola Oficial</h3>
-                    <p class="text-gray-600 text-sm mb-4">Bola de futebol oficial Passa a Bola</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-2xl font-bold text-primary-600">R$ 149,90</span>
-                        <button class="btn btn-primary">Comprar</button>
-                    </div>
-                </div>
-            </div>
+        <!-- Products Grid -->
+        <div id="productsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 hidden">
+            <!-- Products will be loaded here -->
+        </div>
 
-            <!-- Product 3 -->
-            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow">
-                <div class="h-48 bg-gradient-to-br from-purple-100 to-purple-200 flex items-center justify-center">
-                    <span class="text-4xl">🧢</span>
-                </div>
-                <div class="p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Boné Passa a Bola</h3>
-                    <p class="text-gray-600 text-sm mb-4">Boné ajustável com logo da plataforma</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-2xl font-bold text-primary-600">R$ 49,90</span>
-                        <button class="btn btn-primary">Comprar</button>
-                    </div>
-                </div>
+        <!-- Empty State -->
+        <div id="noProducts" class="text-center py-12 hidden">
+            <div class="text-gray-400 mb-4">
+                <svg class="mx-auto h-24 w-24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                </svg>
             </div>
-
-            <!-- Product 4 -->
-            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow">
-                <div class="h-48 bg-gradient-to-br from-yellow-100 to-yellow-200 flex items-center justify-center">
-                    <span class="text-4xl">🎒</span>
-                </div>
-                <div class="p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Mochila Esportiva</h3>
-                    <p class="text-gray-600 text-sm mb-4">Mochila resistente para treinos e jogos</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-2xl font-bold text-primary-600">R$ 129,90</span>
-                        <button class="btn btn-primary">Comprar</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product 5 -->
-            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow">
-                <div class="h-48 bg-gradient-to-br from-red-100 to-red-200 flex items-center justify-center">
-                    <span class="text-4xl">🏆</span>
-                </div>
-                <div class="p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Troféu Personalizado</h3>
-                    <p class="text-gray-600 text-sm mb-4">Troféu para campeonatos e torneios</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-2xl font-bold text-primary-600">R$ 199,90</span>
-                        <button class="btn btn-primary">Comprar</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product 6 -->
-            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow">
-                <div class="h-48 bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center">
-                    <span class="text-4xl">🥤</span>
-                </div>
-                <div class="p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Garrafa Esportiva</h3>
-                    <p class="text-gray-600 text-sm mb-4">Garrafa térmica para hidratação</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-2xl font-bold text-primary-600">R$ 39,90</span>
-                        <button class="btn btn-primary">Comprar</button>
-                    </div>
-                </div>
-            </div>
+            <h3 class="text-lg font-medium text-gray-900 mb-2">Nenhum produto encontrado</h3>
+            <p class="text-gray-600">Tente novamente mais tarde.</p>
         </div>
     </div>
 </section>
@@ -235,3 +165,5 @@
         </div>
     </div>
 </section>
+
+<script src="/js/shop.js"></script>

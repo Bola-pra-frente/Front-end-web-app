@@ -6,6 +6,7 @@ import authRoutes from './auth.routes';
 import playersRoutes from './players.routes';
 import teamsRoutes from './teams.routes';
 import externalRoutes from './external.routes';
+import mockRoutes from './mock.routes';
 import { authenticateToken } from '../middlewares/auth';
 import { optionalAuth } from '../middlewares/optionalAuth';
 
@@ -30,6 +31,14 @@ router.get('/img/:filename', (req: Request, res: Response) => {
   const filename = req.params.filename;
   const imgPath = path.join(__dirname, '../../public/img', filename);
   res.sendFile(imgPath);
+});
+
+// Rota específica para servir JavaScript
+router.get('/js/:filename', (req: Request, res: Response) => {
+  const filename = req.params.filename;
+  const jsPath = path.join(__dirname, '../../public/js', filename);
+  res.setHeader('Content-Type', 'application/javascript');
+  res.sendFile(jsPath);
 });
 
 // Rotas das páginas
@@ -96,6 +105,15 @@ router.get('/shop', (req: Request, res: Response) => {
   });
 });
 
+router.get('/news', (req: Request, res: Response) => {
+  res.render('news', {
+    title: 'Notícias',
+    description: 'Últimas notícias do futebol feminino',
+    user: (req as any).user || null,
+    req: req,
+  });
+});
+
 router.get('/test', (req: Request, res: Response) => {
   res.render('test');
 });
@@ -105,6 +123,7 @@ router.use('/api/auth', authRoutes);
 router.use('/api/players', playersRoutes);
 router.use('/api/teams', teamsRoutes);
 router.use('/api/external', externalRoutes);
+router.use('/api/mock', mockRoutes);
 
 // Documentação da API
 router.use('/docs', swaggerUi.serve);

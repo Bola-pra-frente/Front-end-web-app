@@ -1,6 +1,19 @@
 import axios from 'axios';
 import { config } from '../config/env';
 import { createError } from '../middlewares/errorHandler';
+import {
+  mockTeams,
+  mockPlayers,
+  mockMatches,
+  mockNews,
+  mockProducts,
+  mockStats,
+  MockPlayer,
+  MockTeam,
+  MockMatch,
+  MockNews,
+  MockProduct,
+} from '../data/mockData';
 
 export interface ExternalMatchData {
   id: string;
@@ -30,40 +43,19 @@ export class ExternalApiService {
 
   async getFootballMatches(): Promise<ExternalMatchData[]> {
     try {
-      // Simular dados de API externa para demonstração
-      // Em produção, aqui seria feita a chamada real para uma API de futebol
-      const mockMatches: ExternalMatchData[] = [
-        {
-          id: '1',
-          homeTeam: 'Flamengo Feminino',
-          awayTeam: 'Corinthians Feminino',
-          date: '2024-01-15T16:00:00Z',
-          status: 'SCHEDULED',
-          league: 'Brasileirão Feminino'
-        },
-        {
-          id: '2',
-          homeTeam: 'São Paulo Feminino',
-          awayTeam: 'Palmeiras Feminino',
-          date: '2024-01-16T16:00:00Z',
-          status: 'SCHEDULED',
-          league: 'Brasileirão Feminino'
-        },
-        {
-          id: '3',
-          homeTeam: 'Santos Feminino',
-          awayTeam: 'Grêmio Feminino',
-          date: '2024-01-17T16:00:00Z',
-          status: 'FINISHED',
-          score: { home: 2, away: 1 },
-          league: 'Brasileirão Feminino'
-        }
-      ];
-
       // Simular delay de API
       await new Promise(resolve => setTimeout(resolve, 500));
 
-      return mockMatches;
+      // Converter dados mockados para o formato esperado
+      return mockMatches.map(match => ({
+        id: match.id,
+        homeTeam: match.homeTeam,
+        awayTeam: match.awayTeam,
+        date: match.date,
+        status: match.status,
+        score: match.score,
+        league: match.league,
+      }));
     } catch (error) {
       console.error('Erro ao buscar jogos da API externa:', error);
       throw createError('Erro ao buscar dados da API externa', 500, 'EXTERNAL_API_ERROR');
@@ -72,41 +64,19 @@ export class ExternalApiService {
 
   async getFootballPlayers(): Promise<ExternalPlayerData[]> {
     try {
-      // Simular dados de jogadoras da API externa
-      const mockPlayers: ExternalPlayerData[] = [
-        {
-          id: '1',
-          name: 'Marta Vieira da Silva',
-          position: 'MF',
-          team: 'Orlando Pride',
-          age: 37,
-          nationality: 'Brasileira',
-          marketValue: 500000
-        },
-        {
-          id: '2',
-          name: 'Debinha',
-          position: 'FW',
-          team: 'Kansas City Current',
-          age: 32,
-          nationality: 'Brasileira',
-          marketValue: 300000
-        },
-        {
-          id: '3',
-          name: 'Leticia Izidoro',
-          position: 'GK',
-          team: 'Corinthians',
-          age: 31,
-          nationality: 'Brasileira',
-          marketValue: 200000
-        }
-      ];
-
       // Simular delay de API
       await new Promise(resolve => setTimeout(resolve, 300));
 
-      return mockPlayers;
+      // Converter dados mockados para o formato esperado
+      return mockPlayers.map(player => ({
+        id: player.id,
+        name: `${player.firstName} ${player.lastName}`,
+        position: player.position,
+        team: mockTeams.find(team => team.id === player.teamId)?.name || 'Sem time',
+        age: player.age,
+        nationality: player.nationality,
+        marketValue: player.marketValue,
+      }));
     } catch (error) {
       console.error('Erro ao buscar jogadoras da API externa:', error);
       throw createError('Erro ao buscar dados da API externa', 500, 'EXTERNAL_API_ERROR');
@@ -115,28 +85,10 @@ export class ExternalApiService {
 
   async getFootballNews(): Promise<any[]> {
     try {
-      // Simular dados de notícias sobre futebol feminino
-      const mockNews = [
-        {
-          id: '1',
-          title: 'Seleção Brasileira Feminina anuncia convocadas para amistosos',
-          summary: 'Técnica Pia Sundhage convocou 23 jogadoras para os amistosos de janeiro',
-          date: '2024-01-10',
-          source: 'CBF',
-          url: 'https://example.com/news/1'
-        },
-        {
-          id: '2',
-          title: 'Brasileirão Feminino define calendário para 2024',
-          summary: 'Competição terá 16 times e início em março',
-          date: '2024-01-08',
-          source: 'CBF',
-          url: 'https://example.com/news/2'
-        }
-      ];
-
+      // Simular delay de API
       await new Promise(resolve => setTimeout(resolve, 400));
 
+      // Retornar dados mockados de notícias
       return mockNews;
     } catch (error) {
       console.error('Erro ao buscar notícias da API externa:', error);
@@ -153,17 +105,78 @@ export class ExternalApiService {
       const [matches, players, news] = await Promise.all([
         this.getFootballMatches(),
         this.getFootballPlayers(),
-        this.getFootballNews()
+        this.getFootballNews(),
       ]);
 
       return {
         matches,
         players,
-        news
+        news,
       };
     } catch (error) {
       console.error('Erro ao buscar dados de exemplo:', error);
       throw createError('Erro ao buscar dados de exemplo', 500, 'EXTERNAL_API_ERROR');
+    }
+  }
+
+  // Novos métodos para acessar dados mockados mais ricos
+  async getMockTeams(): Promise<MockTeam[]> {
+    try {
+      await new Promise(resolve => setTimeout(resolve, 200));
+      return mockTeams;
+    } catch (error) {
+      console.error('Erro ao buscar times mockados:', error);
+      throw createError('Erro ao buscar times', 500, 'MOCK_DATA_ERROR');
+    }
+  }
+
+  async getMockPlayers(): Promise<MockPlayer[]> {
+    try {
+      await new Promise(resolve => setTimeout(resolve, 300));
+      return mockPlayers;
+    } catch (error) {
+      console.error('Erro ao buscar jogadoras mockadas:', error);
+      throw createError('Erro ao buscar jogadoras', 500, 'MOCK_DATA_ERROR');
+    }
+  }
+
+  async getMockMatches(): Promise<MockMatch[]> {
+    try {
+      await new Promise(resolve => setTimeout(resolve, 250));
+      return mockMatches;
+    } catch (error) {
+      console.error('Erro ao buscar jogos mockados:', error);
+      throw createError('Erro ao buscar jogos', 500, 'MOCK_DATA_ERROR');
+    }
+  }
+
+  async getMockNews(): Promise<MockNews[]> {
+    try {
+      await new Promise(resolve => setTimeout(resolve, 200));
+      return mockNews;
+    } catch (error) {
+      console.error('Erro ao buscar notícias mockadas:', error);
+      throw createError('Erro ao buscar notícias', 500, 'MOCK_DATA_ERROR');
+    }
+  }
+
+  async getMockProducts(): Promise<MockProduct[]> {
+    try {
+      await new Promise(resolve => setTimeout(resolve, 150));
+      return mockProducts;
+    } catch (error) {
+      console.error('Erro ao buscar produtos mockados:', error);
+      throw createError('Erro ao buscar produtos', 500, 'MOCK_DATA_ERROR');
+    }
+  }
+
+  async getMockStats(): Promise<typeof mockStats> {
+    try {
+      await new Promise(resolve => setTimeout(resolve, 100));
+      return mockStats;
+    } catch (error) {
+      console.error('Erro ao buscar estatísticas mockadas:', error);
+      throw createError('Erro ao buscar estatísticas', 500, 'MOCK_DATA_ERROR');
     }
   }
 
@@ -174,15 +187,12 @@ export class ExternalApiService {
     }
 
     try {
-      const response = await axios.get(
-        `${config.externalApi.footballApiUrl}${endpoint}`,
-        {
-          headers: {
-            'X-Auth-Token': config.externalApi.footballApiKey
-          },
-          timeout: this.timeout
-        }
-      );
+      const response = await axios.get(`${config.externalApi.footballApiUrl}${endpoint}`, {
+        headers: {
+          'X-Auth-Token': config.externalApi.footballApiKey,
+        },
+        timeout: this.timeout,
+      });
 
       return response.data;
     } catch (error) {
@@ -194,7 +204,7 @@ export class ExternalApiService {
           throw createError('API key inválida', 401, 'INVALID_API_KEY');
         }
       }
-      
+
       throw createError('Erro na comunicação com API externa', 500, 'EXTERNAL_API_ERROR');
     }
   }
