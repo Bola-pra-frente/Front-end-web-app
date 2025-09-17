@@ -1,0 +1,1041 @@
+openapi: 3.0.3
+info:
+  title: Passa a Bola API
+  description: |
+    API para a plataforma Passa a Bola - Rede social para o futebol feminino.
+    
+    Esta API permite gerenciar usuários, jogadoras, times e produtos da loja.
+  version: 1.0.0
+  contact:
+    name: Passa a Bola Team
+    email: contato@passabola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost:3000
+    description: Servidor de desenvolvimento
+  - url: https://api.passabola.com
+    description: Servidor de produção
+
+paths:
+  /api/health:
+    get:
+      summary: Health Check
+      description: Verifica se a API está funcionando
+      tags:
+        - Health
+      responses:
+        '200':
+          description: API funcionando corretamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "API funcionando corretamente"
+                  timestamp:
+                    type: string
+                    format: date-time
+                  version:
+                    type: string
+                    example: "1.0.0"
+
+  /api/auth/register:
+    post:
+      summary: Registrar usuário
+      description: Cria uma nova conta de usuário
+      tags:
+        - Autenticação
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: "usuario@exemplo.com"
+                password:
+                  type: string
+                  minLength: 6
+                  example: "senha123"
+                role:
+                  type: string
+                  enum: [ATHLETE, SCOUT, FAN, ADMIN]
+                  default: FAN
+                  example: "FAN"
+      responses:
+        '201':
+          description: Usuário criado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Usuário criado com sucesso"
+                  user:
+                    $ref: '#/components/schemas/User'
+        '400':
+          description: Dados inválidos ou email já existe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/auth/login:
+    post:
+      summary: Fazer login
+      description: Autentica um usuário e retorna token
+      tags:
+        - Autenticação
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: "usuario@exemplo.com"
+                password:
+                  type: string
+                  example: "senha123"
+      responses:
+        '200':
+          description: Login realizado com sucesso
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                example: "token=jwt_token_here; HttpOnly; Path=/"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Login realizado com sucesso"
+                  user:
+                    $ref: '#/components/schemas/User'
+        '401':
+          description: Credenciais inválidas
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/auth/logout:
+    post:
+      summary: Fazer logout
+      description: Desautentica o usuário atual
+      tags:
+        - Autenticação
+      security:
+        - cookieAuth: []
+      responses:
+        '200':
+          description: Logout realizado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Logout realizado com sucesso"
+        '401':
+          description: Não autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/auth/profile:
+    get:
+      summary: Obter perfil do usuário
+      description: Retorna informações do usuário autenticado
+      tags:
+        - Autenticação
+      security:
+        - cookieAuth: []
+      responses:
+        '200':
+          description: Perfil obtido com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Perfil obtido com sucesso"
+                  profile:
+                    $ref: '#/components/schemas/UserProfile'
+        '401':
+          description: Não autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/players:
+    get:
+      summary: Listar jogadoras
+      description: Retorna lista de jogadoras com filtros e paginação
+      tags:
+        - Jogadoras
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: search
+          in: query
+          description: Buscar por nome
+          schema:
+            type: string
+          example: "Maria"
+        - name: position
+          in: query
+          description: Filtrar por posição
+          schema:
+            type: string
+            enum: [GK, DF, MF, FW]
+          example: "MF"
+        - name: teamId
+          in: query
+          description: Filtrar por time
+          schema:
+            type: string
+          example: "team-id-123"
+        - name: page
+          in: query
+          description: Número da página
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+          example: 1
+        - name: limit
+          in: query
+          description: Itens por página
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+          example: 10
+      responses:
+        '200':
+          description: Lista de jogadoras obtida com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Jogadoras obtidas com sucesso"
+                  players:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Player'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '401':
+          description: Não autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    post:
+      summary: Criar jogadora
+      description: Cria um novo perfil de jogadora
+      tags:
+        - Jogadoras
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - firstName
+                - lastName
+                - position
+                - age
+              properties:
+                firstName:
+                  type: string
+                  minLength: 2
+                  maxLength: 50
+                  example: "Maria"
+                lastName:
+                  type: string
+                  minLength: 2
+                  maxLength: 50
+                  example: "Silva"
+                position:
+                  type: string
+                  enum: [GK, DF, MF, FW]
+                  example: "MF"
+                age:
+                  type: integer
+                  minimum: 14
+                  maximum: 50
+                  example: 25
+                teamId:
+                  type: string
+                  example: "team-id-123"
+                height:
+                  type: number
+                  minimum: 0
+                  example: 165
+                weight:
+                  type: number
+                  minimum: 0
+                  example: 58
+                dominantFoot:
+                  type: string
+                  enum: [LEFT, RIGHT, BOTH]
+                  example: "RIGHT"
+                bio:
+                  type: string
+                  maxLength: 500
+                  example: "Jogadora experiente..."
+      responses:
+        '201':
+          description: Jogadora criada com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Jogadora criada com sucesso"
+                  player:
+                    $ref: '#/components/schemas/Player'
+        '400':
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Não autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/players/{id}:
+    get:
+      summary: Obter jogadora por ID
+      description: Retorna informações de uma jogadora específica
+      tags:
+        - Jogadoras
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID da jogadora
+          schema:
+            type: string
+          example: "player-id-123"
+      responses:
+        '200':
+          description: Jogadora obtida com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Jogadora obtida com sucesso"
+                  player:
+                    $ref: '#/components/schemas/Player'
+        '404':
+          description: Jogadora não encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Não autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    put:
+      summary: Atualizar jogadora
+      description: Atualiza informações de uma jogadora
+      tags:
+        - Jogadoras
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID da jogadora
+          schema:
+            type: string
+          example: "player-id-123"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                  minLength: 2
+                  maxLength: 50
+                  example: "Maria"
+                lastName:
+                  type: string
+                  minLength: 2
+                  maxLength: 50
+                  example: "Silva"
+                position:
+                  type: string
+                  enum: [GK, DF, MF, FW]
+                  example: "MF"
+                age:
+                  type: integer
+                  minimum: 14
+                  maximum: 50
+                  example: 25
+                teamId:
+                  type: string
+                  example: "team-id-123"
+                height:
+                  type: number
+                  minimum: 0
+                  example: 165
+                weight:
+                  type: number
+                  minimum: 0
+                  example: 58
+                dominantFoot:
+                  type: string
+                  enum: [LEFT, RIGHT, BOTH]
+                  example: "RIGHT"
+                bio:
+                  type: string
+                  maxLength: 500
+                  example: "Jogadora experiente..."
+      responses:
+        '200':
+          description: Jogadora atualizada com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Jogadora atualizada com sucesso"
+                  player:
+                    $ref: '#/components/schemas/Player'
+        '400':
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Não autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Sem permissão
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Jogadora não encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      summary: Deletar jogadora
+      description: Remove uma jogadora
+      tags:
+        - Jogadoras
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID da jogadora
+          schema:
+            type: string
+          example: "player-id-123"
+      responses:
+        '200':
+          description: Jogadora deletada com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Jogadora deletada com sucesso"
+        '401':
+          description: Não autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Sem permissão
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Jogadora não encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/teams:
+    get:
+      summary: Listar times
+      description: Retorna lista de times com filtros e paginação
+      tags:
+        - Times
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: search
+          in: query
+          description: Buscar por nome
+          schema:
+            type: string
+          example: "Leonas"
+        - name: city
+          in: query
+          description: Filtrar por cidade
+          schema:
+            type: string
+          example: "São Paulo"
+        - name: state
+          in: query
+          description: Filtrar por estado
+          schema:
+            type: string
+          example: "SP"
+        - name: country
+          in: query
+          description: Filtrar por país
+          schema:
+            type: string
+          example: "Brasil"
+        - name: page
+          in: query
+          description: Número da página
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+          example: 1
+        - name: limit
+          in: query
+          description: Itens por página
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+          example: 10
+      responses:
+        '200':
+          description: Lista de times obtida com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Times obtidos com sucesso"
+                  teams:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Team'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '401':
+          description: Não autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    post:
+      summary: Criar time
+      description: Cria um novo time
+      tags:
+        - Times
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                  minLength: 2
+                  maxLength: 100
+                  example: "Leonas FC"
+                city:
+                  type: string
+                  minLength: 2
+                  maxLength: 50
+                  example: "São Paulo"
+                state:
+                  type: string
+                  minLength: 2
+                  maxLength: 50
+                  example: "SP"
+                country:
+                  type: string
+                  minLength: 2
+                  maxLength: 50
+                  example: "Brasil"
+                founded:
+                  type: integer
+                  minimum: 1800
+                  maximum: 2024
+                  example: 2015
+                description:
+                  type: string
+                  maxLength: 1000
+                  example: "Time de futebol feminino..."
+                website:
+                  type: string
+                  format: uri
+                  example: "https://leonasfc.com.br"
+      responses:
+        '201':
+          description: Time criado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Time criado com sucesso"
+                  team:
+                    $ref: '#/components/schemas/Team'
+        '400':
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Não autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/teams/{id}:
+    get:
+      summary: Obter time por ID
+      description: Retorna informações de um time específico
+      tags:
+        - Times
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do time
+          schema:
+            type: string
+          example: "team-id-123"
+      responses:
+        '200':
+          description: Time obtido com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Time obtido com sucesso"
+                  team:
+                    $ref: '#/components/schemas/Team'
+        '404':
+          description: Time não encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Não autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/external/sample:
+    get:
+      summary: Dados de exemplo da API externa
+      description: Retorna dados de exemplo de APIs externas (jogos, jogadoras, notícias)
+      tags:
+        - API Externa
+      responses:
+        '200':
+          description: Dados obtidos com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Dados de exemplo obtidos com sucesso"
+                  data:
+                    type: object
+                    properties:
+                      matches:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/ExternalMatch'
+                      players:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/ExternalPlayer'
+                      news:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/ExternalNews'
+
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: token
+
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "user-id-123"
+        email:
+          type: string
+          format: email
+          example: "usuario@exemplo.com"
+        role:
+          type: string
+          enum: [ATHLETE, SCOUT, FAN, ADMIN]
+          example: "FAN"
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    UserProfile:
+      allOf:
+        - $ref: '#/components/schemas/User'
+        - type: object
+          properties:
+            profile:
+              $ref: '#/components/schemas/Profile'
+
+    Profile:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "profile-id-123"
+        firstName:
+          type: string
+          example: "Maria"
+        lastName:
+          type: string
+          example: "Silva"
+        bio:
+          type: string
+          example: "Jogadora profissional..."
+        avatar:
+          type: string
+          example: "https://example.com/avatar.jpg"
+        phone:
+          type: string
+          example: "+55 11 99999-9999"
+        location:
+          type: string
+          example: "São Paulo, SP"
+        dateOfBirth:
+          type: string
+          format: date
+        instagram:
+          type: string
+          example: "@mariasilva"
+        twitter:
+          type: string
+          example: "@mariasilva"
+        linkedin:
+          type: string
+          example: "linkedin.com/in/mariasilva"
+        position:
+          type: string
+          enum: [GK, DF, MF, FW]
+          example: "MF"
+        teamId:
+          type: string
+          example: "team-id-123"
+        age:
+          type: integer
+          example: 25
+        height:
+          type: number
+          example: 165
+        weight:
+          type: number
+          example: 58
+        dominantFoot:
+          type: string
+          enum: [LEFT, RIGHT, BOTH]
+          example: "RIGHT"
+        company:
+          type: string
+          example: "Agência de Talentos"
+        experience:
+          type: integer
+          example: 5
+
+    Player:
+      allOf:
+        - $ref: '#/components/schemas/Profile'
+        - type: object
+          properties:
+            user:
+              $ref: '#/components/schemas/User'
+            team:
+              $ref: '#/components/schemas/Team'
+
+    Team:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "team-id-123"
+        name:
+          type: string
+          example: "Leonas FC"
+        city:
+          type: string
+          example: "São Paulo"
+        state:
+          type: string
+          example: "SP"
+        country:
+          type: string
+          example: "Brasil"
+        logo:
+          type: string
+          example: "https://example.com/logo.png"
+        founded:
+          type: integer
+          example: 2015
+        description:
+          type: string
+          example: "Time de futebol feminino..."
+        website:
+          type: string
+          example: "https://leonasfc.com.br"
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        players:
+          type: array
+          items:
+            $ref: '#/components/schemas/Profile'
+        _count:
+          type: object
+          properties:
+            players:
+              type: integer
+              example: 15
+            posts:
+              type: integer
+              example: 8
+
+    ExternalMatch:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "match-123"
+        homeTeam:
+          type: string
+          example: "Flamengo Feminino"
+        awayTeam:
+          type: string
+          example: "Corinthians Feminino"
+        date:
+          type: string
+          format: date-time
+          example: "2024-01-15T16:00:00Z"
+        status:
+          type: string
+          enum: [SCHEDULED, FINISHED, CANCELLED]
+          example: "SCHEDULED"
+        score:
+          type: object
+          properties:
+            home:
+              type: integer
+              example: 2
+            away:
+              type: integer
+              example: 1
+        league:
+          type: string
+          example: "Brasileirão Feminino"
+
+    ExternalPlayer:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "player-123"
+        name:
+          type: string
+          example: "Marta Vieira da Silva"
+        position:
+          type: string
+          example: "MF"
+        team:
+          type: string
+          example: "Orlando Pride"
+        age:
+          type: integer
+          example: 37
+        nationality:
+          type: string
+          example: "Brasileira"
+        marketValue:
+          type: number
+          example: 500000
+
+    ExternalNews:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "news-123"
+        title:
+          type: string
+          example: "Seleção Brasileira Feminina anuncia convocadas"
+        summary:
+          type: string
+          example: "Técnica Pia Sundhage convocou 23 jogadoras..."
+        date:
+          type: string
+          format: date
+          example: "2024-01-10"
+        source:
+          type: string
+          example: "CBF"
+        url:
+          type: string
+          format: uri
+          example: "https://example.com/news/1"
+
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+          example: 1
+        limit:
+          type: integer
+          example: 10
+        total:
+          type: integer
+          example: 50
+        pages:
+          type: integer
+          example: 5
+
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Mensagem de erro"
+        code:
+          type: string
+          example: "ERROR_CODE"
+        stack:
+          type: string
+          description: "Apenas em desenvolvimento"
+          example: "Error stack trace..."
+
+tags:
+  - name: Health
+    description: Endpoints de verificação de saúde da API
+  - name: Autenticação
+    description: Endpoints de autenticação e gerenciamento de usuários
+  - name: Jogadoras
+    description: Endpoints para gerenciamento de jogadoras
+  - name: Times
+    description: Endpoints para gerenciamento de times
+  - name: API Externa
+    description: Endpoints para integração com APIs externas

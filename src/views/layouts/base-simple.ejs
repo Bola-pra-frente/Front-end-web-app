@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> - Passa a Bola</title>
+    <meta name="description" content="<%= description || 'Rede social para o futebol feminino - Conectando atletas, olheiros e fãs' %>">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/output.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="/" class="text-2xl font-bold text-primary-600">
+                        Passa a Bola
+                    </a>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="/" class="text-gray-700 hover:text-primary-600">Home</a>
+                    <a href="/players" class="text-gray-700 hover:text-primary-600">Jogadoras</a>
+                    <a href="/teams" class="text-gray-700 hover:text-primary-600">Times</a>
+                    <a href="/community" class="text-gray-700 hover:text-primary-600">Comunidade</a>
+                    <a href="/shop" class="text-gray-700 hover:text-primary-600">Loja</a>
+                </nav>
+                <div class="flex items-center space-x-4">
+                    <% if (user) { %>
+                        <span class="text-sm text-gray-600">Olá, <%= user.email %></span>
+                        <a href="/api/auth/logout" class="btn btn-secondary">Sair</a>
+                    <% } else { %>
+                        <a href="/login" class="btn btn-secondary">Entrar</a>
+                        <a href="/register" class="btn btn-primary">Cadastrar</a>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1">
+        <% if (typeof body !== 'undefined') { %>
+            <%- body %>
+        <% } %>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <p>&copy; 2025 Passa a Bola. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

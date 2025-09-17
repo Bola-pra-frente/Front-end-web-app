@@ -1,0 +1,237 @@
+<%- include('layouts/base-simple') %>
+
+<!-- Header Section -->
+<section class="bg-gradient-to-r from-purple-600 to-pink-600 text-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Loja Passa a Bola</h1>
+            <p class="text-xl md:text-2xl max-w-3xl mx-auto opacity-90">
+                Produtos exclusivos para apoiar o futebol feminino
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Categories Section -->
+<section class="py-12 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <!-- Category 1 -->
+            <div class="bg-white rounded-lg shadow-sm p-6 text-center hover:shadow-lg transition-shadow cursor-pointer">
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">Roupas</h3>
+                <p class="text-gray-600 text-sm">Camisas, shorts e acessórios</p>
+            </div>
+
+            <!-- Category 2 -->
+            <div class="bg-white rounded-lg shadow-sm p-6 text-center hover:shadow-lg transition-shadow cursor-pointer">
+                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"></path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">Equipamentos</h3>
+                <p class="text-gray-600 text-sm">Bolas, chuteiras e equipamentos</p>
+            </div>
+
+            <!-- Category 3 -->
+            <div class="bg-white rounded-lg shadow-sm p-6 text-center hover:shadow-lg transition-shadow cursor-pointer">
+                <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2h4a1 1 0 110 2h-1v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6H3a1 1 0 110-2h4zM9 6h6v10H9V6z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">Acessórios</h3>
+                <p class="text-gray-600 text-sm">Bonés, mochilas e mais</p>
+            </div>
+
+            <!-- Category 4 -->
+            <div class="bg-white rounded-lg shadow-sm p-6 text-center hover:shadow-lg transition-shadow cursor-pointer">
+                <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"></path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">Memorabilia</h3>
+                <p class="text-gray-600 text-sm">Itens colecionáveis</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Products -->
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Produtos em Destaque</h2>
+            <p class="text-xl text-gray-600">Os favoritos da nossa comunidade</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Product 1 -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow">
+                <div class="h-48 bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center">
+                    <span class="text-4xl">👕</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Camisa Passa a Bola</h3>
+                    <p class="text-gray-600 text-sm mb-4">Camisa oficial da plataforma com design exclusivo</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-2xl font-bold text-primary-600">R$ 89,90</span>
+                        <button class="btn btn-primary">Comprar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow">
+                <div class="h-48 bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center">
+                    <span class="text-4xl">⚽</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Bola Oficial</h3>
+                    <p class="text-gray-600 text-sm mb-4">Bola de futebol oficial Passa a Bola</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-2xl font-bold text-primary-600">R$ 149,90</span>
+                        <button class="btn btn-primary">Comprar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow">
+                <div class="h-48 bg-gradient-to-br from-purple-100 to-purple-200 flex items-center justify-center">
+                    <span class="text-4xl">🧢</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Boné Passa a Bola</h3>
+                    <p class="text-gray-600 text-sm mb-4">Boné ajustável com logo da plataforma</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-2xl font-bold text-primary-600">R$ 49,90</span>
+                        <button class="btn btn-primary">Comprar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow">
+                <div class="h-48 bg-gradient-to-br from-yellow-100 to-yellow-200 flex items-center justify-center">
+                    <span class="text-4xl">🎒</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Mochila Esportiva</h3>
+                    <p class="text-gray-600 text-sm mb-4">Mochila resistente para treinos e jogos</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-2xl font-bold text-primary-600">R$ 129,90</span>
+                        <button class="btn btn-primary">Comprar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 5 -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow">
+                <div class="h-48 bg-gradient-to-br from-red-100 to-red-200 flex items-center justify-center">
+                    <span class="text-4xl">🏆</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Troféu Personalizado</h3>
+                    <p class="text-gray-600 text-sm mb-4">Troféu para campeonatos e torneios</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-2xl font-bold text-primary-600">R$ 199,90</span>
+                        <button class="btn btn-primary">Comprar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 6 -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow">
+                <div class="h-48 bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center">
+                    <span class="text-4xl">🥤</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Garrafa Esportiva</h3>
+                    <p class="text-gray-600 text-sm mb-4">Garrafa térmica para hidratação</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-2xl font-bold text-primary-600">R$ 39,90</span>
+                        <button class="btn btn-primary">Comprar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Coming Soon Section -->
+<section class="py-16 bg-gray-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div class="w-24 h-24 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-8">
+            <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+        </div>
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+            Loja Online em Desenvolvimento
+        </h2>
+        <p class="text-xl text-gray-600 mb-8">
+            Estamos trabalhando em uma loja online completa com sistema de pagamento seguro. 
+            Em breve você poderá comprar todos esses produtos!
+        </p>
+        
+        <div class="bg-white rounded-lg shadow-sm p-8 max-w-2xl mx-auto">
+            <h3 class="text-xl font-semibold text-gray-900 mb-4">Funcionalidades que virão:</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+                <div class="flex items-center space-x-3">
+                    <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <span class="text-gray-700">Carrinho de compras</span>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <span class="text-gray-700">Pagamento seguro</span>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <span class="text-gray-700">Rastreamento de pedidos</span>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <span class="text-gray-700">Histórico de compras</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-12">
+            <p class="text-gray-600 mb-6">
+                Quer ser notificado quando a loja estiver pronta?
+            </p>
+            <% if (user) { %>
+                <button class="btn btn-primary px-8 py-3">
+                    Receber Notificações
+                </button>
+            <% } else { %>
+                <a href="/register" class="btn btn-primary px-8 py-3">
+                    Cadastre-se para Receber Notificações
+                </a>
+            <% } %>
+        </div>
+    </div>
+</section>

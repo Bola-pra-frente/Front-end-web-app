@@ -1,0 +1,238 @@
+<%- include('layouts/base-simple', {
+    title: title,
+    description: description,
+    user: user,
+    body: `
+        <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-md w-full space-y-8">
+                <div>
+                    <div class="flex justify-center">
+                        <div class="w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center">
+                            <span class="text-white font-bold text-2xl">⚽</span>
+                        </div>
+                    </div>
+                    <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                        Crie sua conta
+                    </h2>
+                    <p class="mt-2 text-center text-sm text-gray-600">
+                        Ou
+                        <a href="/login" class="font-medium text-primary-600 hover:text-primary-500">
+                            entre com sua conta existente
+                        </a>
+                    </p>
+                </div>
+                
+                <!-- Alert Container -->
+                <div id="alert-container"></div>
+                
+                <form class="mt-8 space-y-6" id="register-form">
+                    <div class="space-y-4">
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">
+                                Email
+                            </label>
+                            <input 
+                                id="email" 
+                                name="email" 
+                                type="email" 
+                                autocomplete="email" 
+                                required 
+                                class="input"
+                                placeholder="seu@email.com"
+                            >
+                        </div>
+                        
+                        <div>
+                            <label for="password" class="block text-sm font-medium text-gray-700 mb-1">
+                                Senha
+                            </label>
+                            <input 
+                                id="password" 
+                                name="password" 
+                                type="password" 
+                                autocomplete="new-password" 
+                                required 
+                                class="input"
+                                placeholder="Mínimo 6 caracteres"
+                                minlength="6"
+                            >
+                        </div>
+
+                        <div>
+                            <label for="confirm-password" class="block text-sm font-medium text-gray-700 mb-1">
+                                Confirmar Senha
+                            </label>
+                            <input 
+                                id="confirm-password" 
+                                name="confirmPassword" 
+                                type="password" 
+                                autocomplete="new-password" 
+                                required 
+                                class="input"
+                                placeholder="Confirme sua senha"
+                            >
+                        </div>
+
+                        <div>
+                            <label for="role" class="block text-sm font-medium text-gray-700 mb-1">
+                                Tipo de Conta
+                            </label>
+                            <select 
+                                id="role" 
+                                name="role" 
+                                required 
+                                class="input"
+                            >
+                                <option value="">Selecione seu perfil</option>
+                                <option value="FAN">Fã do Futebol Feminino</option>
+                                <option value="ATHLETE">Atleta</option>
+                                <option value="SCOUT">Olheiro</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center">
+                        <input 
+                            id="terms" 
+                            name="terms" 
+                            type="checkbox" 
+                            required
+                            class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
+                        >
+                        <label for="terms" class="ml-2 block text-sm text-gray-900">
+                            Eu concordo com os 
+                            <a href="/terms" class="font-medium text-primary-600 hover:text-primary-500">
+                                Termos de Uso
+                            </a> 
+                            e 
+                            <a href="/privacy" class="font-medium text-primary-600 hover:text-primary-500">
+                                Política de Privacidade
+                            </a>
+                        </label>
+                    </div>
+
+                    <div>
+                        <button 
+                            type="submit" 
+                            class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200"
+                            id="submit-btn"
+                        >
+                            <span id="submit-text">Criar Conta</span>
+                            <div id="loading-spinner" class="hidden loading ml-2"></div>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <script>
+            // Password confirmation validation
+            document.getElementById('confirm-password').addEventListener('input', function() {
+                const password = document.getElementById('password').value;
+                const confirmPassword = this.value;
+                
+                if (password !== confirmPassword) {
+                    this.setCustomValidity('As senhas não coincidem');
+                } else {
+                    this.setCustomValidity('');
+                }
+            });
+
+            document.getElementById('password').addEventListener('input', function() {
+                const confirmPassword = document.getElementById('confirm-password');
+                if (confirmPassword.value) {
+                    if (this.value !== confirmPassword.value) {
+                        confirmPassword.setCustomValidity('As senhas não coincidem');
+                    } else {
+                        confirmPassword.setCustomValidity('');
+                    }
+                }
+            });
+
+            document.getElementById('register-form').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const submitBtn = document.getElementById('submit-btn');
+                const submitText = document.getElementById('submit-text');
+                const loadingSpinner = document.getElementById('loading-spinner');
+                const alertContainer = document.getElementById('alert-container');
+                
+                // Show loading state
+                submitBtn.disabled = true;
+                submitText.textContent = 'Criando conta...';
+                loadingSpinner.classList.remove('hidden');
+                
+                // Clear previous alerts
+                alertContainer.innerHTML = '';
+                
+                const formData = new FormData(this);
+                const data = {
+                    email: formData.get('email'),
+                    password: formData.get('password'),
+                    role: formData.get('role')
+                };
+                
+                try {
+                    const response = await fetch('/api/auth/register', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        credentials: 'include',
+                        body: JSON.stringify(data)
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (response.ok) {
+                        // Show success message
+                        alertContainer.innerHTML = \`
+                            <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
+                                <div class="flex">
+                                    <svg class="w-5 h-5 text-green-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    Conta criada com sucesso! Redirecionando...
+                                </div>
+                            </div>
+                        \`;
+                        
+                        // Redirect after a short delay
+                        setTimeout(() => {
+                            window.location.href = '/';
+                        }, 1500);
+                    } else {
+                        // Show error message
+                        alertContainer.innerHTML = \`
+                            <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+                                <div class="flex">
+                                    <svg class="w-5 h-5 text-red-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    \${result.message || 'Erro ao criar conta'}
+                                </div>
+                            </div>
+                        \`;
+                    }
+                } catch (error) {
+                    console.error('Erro:', error);
+                    alertContainer.innerHTML = \`
+                        <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+                            <div class="flex">
+                                <svg class="w-5 h-5 text-red-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+                                </svg>
+                                Erro de conexão. Tente novamente.
+                            </div>
+                        </div>
+                    \`;
+                } finally {
+                    // Reset button state
+                    submitBtn.disabled = false;
+                    submitText.textContent = 'Criar Conta';
+                    loadingSpinner.classList.add('hidden');
+                }
+            });
+        </script>
+    `
+}) %>
