@@ -13,14 +13,11 @@
   "routes": [
     {
       "src": "/css/(.*)",
-      "dest": "/public/css/$1",
-      "headers": {
-        "Content-Type": "text/css"
-      }
+      "dest": "/api/vercel.ts"
     },
     {
       "src": "/img/(.*)",
-      "dest": "/public/img/$1"
+      "dest": "/api/vercel.ts"
     },
     {
       "src": "/(.*)",

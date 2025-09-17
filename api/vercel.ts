@@ -1,14 +1,34 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import app from '../src/app';
+import path from 'path';
+import fs from 'fs';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
-    // Configurar o caminho das views para produção
-    if (process.env.NODE_ENV === 'production') {
-      app.set('views', process.cwd() + '/src/views');
+    // Servir arquivos estáticos diretamente
+    if (req.url?.startsWith('/css/')) {
+      const filename = req.url.split('/').pop();
+      const cssPath = path.join(process.cwd(), 'public', 'css', filename || '');
+      
+      if (fs.existsSync(cssPath)) {
+        res.setHeader('Content-Type', 'text/css');
+        res.setHeader('Cache-Control', 'public, max-age=31536000');
+        return res.sendFile(cssPath);
+      }
     }
 
-    return app(req, res);
+    if (req.url?.startsWith('/img/')) {
+      const filename = req.url.split('/').pop();
+      const imgPath = path.join(process.cwd(), 'public', 'img', filename || '');
+      
+      if (fs.existsSync(imgPath)) {
+        res.setHeader('Cache-Control', 'public, max-age=31536000');
+        return res.sendFile(imgPath);
+      }
+    }
+
+    // Para outras rotas, usar a aplicação Express
+    const app = await import('../src/app');
+    return app.default(req, res);
   } catch (error) {
     console.error('Error in Vercel handler:', error);
     res.status(500).json({

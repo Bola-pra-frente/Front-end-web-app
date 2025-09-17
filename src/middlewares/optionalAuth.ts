@@ -23,19 +23,25 @@ export const optionalAuth = async (req: Request, res: Response, next: NextFuncti
 
     const decoded = verifyToken(token) as TokenPayload;
 
-    // Verificar se o usuário ainda existe
-    const user = await prisma.user.findUnique({
-      where: { id: decoded.userId },
-    });
+    // Verificar se o usuário ainda existe (com fallback se banco não disponível)
+    try {
+      const user = await prisma.user.findUnique({
+        where: { id: decoded.userId },
+      });
 
-    if (!user) {
-      // Se usuário não existe, limpa o cookie e continua
-      res.clearCookie('token');
+      if (!user) {
+        // Se usuário não existe, limpa o cookie e continua
+        res.clearCookie('token');
+        return next();
+      }
+
+      req.user = decoded;
+      return next();
+    } catch (dbError) {
+      // Se banco não disponível, continua sem autenticação
+      console.warn('Database not available, continuing without auth:', dbError);
       return next();
     }
-
-    req.user = decoded;
-    return next();
   } catch (error) {
     // Se token inválido, limpa o cookie e continua
     res.clearCookie('token');
