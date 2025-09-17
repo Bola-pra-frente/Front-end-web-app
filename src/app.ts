@@ -41,11 +41,15 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(cookieParser());
 
 // Servir arquivos estáticos
-app.use(express.static('public'));
+const publicPath = process.env.NODE_ENV === 'production' ? process.cwd() + '/public' : 'public';
+app.use(express.static(publicPath));
 
 // Configurar EJS como view engine
 app.set('view engine', 'ejs');
-app.set('views', 'src/views');
+// Configurar views para funcionar tanto localmente quanto na Vercel
+const viewsPath =
+  process.env.NODE_ENV === 'production' ? process.cwd() + '/src/views' : 'src/views';
+app.set('views', viewsPath);
 
 // Rotas
 app.use('/', routes);

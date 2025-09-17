@@ -44,7 +44,7 @@ O Passa a Bola é uma rede social dedicada ao futebol feminino, com foco em dar 
 
 1. **Clone o repositório**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/Bola-pra-frente/Front-end-web-app.git
    cd Front-end-web-app
    ```
 
