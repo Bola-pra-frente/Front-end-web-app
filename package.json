@@ -11,7 +11,8 @@
     "start": "node dist/server.js",
     "lint": "eslint .",
     "format": "prettier -w .",
-    "build": "tsc",
+    "build": "tsc && npm run build:css",
+    "postinstall": "npm run prisma:generate",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio"

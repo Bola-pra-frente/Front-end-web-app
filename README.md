@@ -253,7 +253,7 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 ## 📞 Contato
 
 - **Email**: contato@passabola.com
-- **Website**: https://passabola.com
+- **Website**: https://front-end-web-ecxrdjick-matheus-xaviers-projects-d17e8510.vercel.app
 - **LinkedIn**: [Passa a Bola](https://linkedin.com/company/passabola)
 
 ---

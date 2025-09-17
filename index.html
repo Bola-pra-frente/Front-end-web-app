@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Passa a Bola - Women's Football Network</title>
+    <meta
+      name="description"
+      content="Rede social para o futebol feminino - Conectando atletas, olheiros e fãs"
+    />
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+      .container {
+        text-align: center;
+        max-width: 600px;
+        padding: 2rem;
+      }
+      .logo {
+        font-size: 3rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+      .subtitle {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+      }
+      .btn {
+        display: inline-block;
+        padding: 1rem 2rem;
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        margin: 0.5rem;
+      }
+      .btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+      .btn-primary {
+        background: #ff6b6b;
+        border-color: #ff6b6b;
+      }
+      .btn-primary:hover {
+        background: #ff5252;
+        border-color: #ff5252;
+      }
+      .info {
+        margin-top: 2rem;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        font-size: 0.9rem;
+      }
+      .spinner {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 1s ease-in-out infinite;
+        margin-right: 10px;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="logo">⚽ Passa a Bola</div>
+      <div class="subtitle">Women's Football Network</div>
+
+      <div id="loading" style="display: block">
+        <div class="spinner"></div>
+        Carregando aplicação...
+      </div>
+
+      <div id="content" style="display: none">
+        <p>🚀 <strong>Aplicação Node.js em execução!</strong></p>
+        <p>Conectando atletas, olheiros e fãs do futebol feminino</p>
+
+        <div style="margin: 2rem 0">
+          <a href="#" id="app-link" class="btn btn-primary">Acessar Aplicação</a>
+          <a href="https://github.com/seu-usuario/passa-a-bola" class="btn" target="_blank"
+            >Ver Código no GitHub</a
+          >
+        </div>
+
+        <div class="info">
+          <h3>📋 Funcionalidades:</h3>
+          <ul style="text-align: left; display: inline-block">
+            <li>✅ Autenticação JWT</li>
+            <li>✅ CRUD de Jogadoras e Times</li>
+            <li>✅ Comunidade e Loja</li>
+            <li>✅ API REST completa</li>
+            <li>✅ Documentação OpenAPI</li>
+            <li>✅ Testes unitários</li>
+          </ul>
+        </div>
+      </div>
+
+      <div id="error" style="display: none; color: #ff6b6b">
+        <p>⚠️ Aplicação não está rodando localmente</p>
+        <p>Para testar localmente:</p>
+        <code
+          style="
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0.5rem;
+            border-radius: 4px;
+            display: block;
+            margin: 1rem 0;
+          "
+        >
+          npm install<br />
+          npm run dev
+        </code>
+      </div>
+    </div>
+
+    <script>
+      // Tentar conectar com a aplicação local
+      const checkApp = async () => {
+        try {
+          const response = await fetch('http://localhost:3000', {
+            method: 'HEAD',
+            mode: 'no-cors',
+          });
+
+          document.getElementById('loading').style.display = 'none';
+          document.getElementById('content').style.display = 'block';
+          document.getElementById('app-link').href = 'http://localhost:3000';
+        } catch (error) {
+          document.getElementById('loading').style.display = 'none';
+          document.getElementById('error').style.display = 'block';
+        }
+      };
+
+      // Verificar se está rodando localmente
+      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        checkApp();
+      } else {
+        // Se estiver no GitHub Pages, mostrar informações sobre deploy
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('content').style.display = 'block';
+
+        // Atualizar links para produção
+        document.getElementById('app-link').textContent = 'Ver Aplicação na Vercel';
+        document.getElementById('app-link').href = 'https://passa-a-bola.vercel.app'; // Substitua pela sua URL da Vercel
+
+        // Adicionar informações sobre deploy
+        const deployInfo = document.createElement('div');
+        deployInfo.className = 'info';
+        deployInfo.innerHTML = `
+                <h3>🚀 Deploy em Produção:</h3>
+                <p>Esta aplicação Node.js precisa ser hospedada em uma plataforma como:</p>
+                <ul style="text-align: left; display: inline-block;">
+                    <li><a href="https://heroku.com" target="_blank" style="color: #87CEEB;">Heroku</a></li>
+                    <li><a href="https://vercel.com" target="_blank" style="color: #87CEEB;">Vercel</a></li>
+                    <li><a href="https://railway.app" target="_blank" style="color: #87CEEB;">Railway</a></li>
+                    <li><a href="https://render.com" target="_blank" style="color: #87CEEB;">Render</a></li>
+                </ul>
+            `;
+        document.querySelector('.container').appendChild(deployInfo);
+      }
+    </script>
+  </body>
+</html>
