@@ -1,188 +1,319 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Passa a Bola - Women's Football Network</title>
-    <meta
-      name="description"
-      content="Rede social para o futebol feminino - Conectando atletas, olheiros e fãs"
-    />
-    <style>
-      body {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        margin: 0;
-        padding: 0;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-      }
-      .container {
-        text-align: center;
-        max-width: 600px;
-        padding: 2rem;
-      }
-      .logo {
-        font-size: 3rem;
-        font-weight: bold;
-        margin-bottom: 1rem;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-      }
-      .subtitle {
-        font-size: 1.2rem;
-        margin-bottom: 2rem;
-        opacity: 0.9;
-      }
-      .btn {
-        display: inline-block;
-        padding: 1rem 2rem;
-        background: rgba(255, 255, 255, 0.2);
-        color: white;
-        text-decoration: none;
-        border-radius: 8px;
-        font-weight: bold;
-        transition: all 0.3s ease;
-        border: 2px solid rgba(255, 255, 255, 0.3);
-        margin: 0.5rem;
-      }
-      .btn:hover {
-        background: rgba(255, 255, 255, 0.3);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      }
-      .btn-primary {
-        background: #ff6b6b;
-        border-color: #ff6b6b;
-      }
-      .btn-primary:hover {
-        background: #ff5252;
-        border-color: #ff5252;
-      }
-      .info {
-        margin-top: 2rem;
-        padding: 1rem;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 8px;
-        font-size: 0.9rem;
-      }
-      .spinner {
-        display: inline-block;
-        width: 20px;
-        height: 20px;
-        border: 3px solid rgba(255, 255, 255, 0.3);
-        border-radius: 50%;
-        border-top-color: white;
-        animation: spin 1s ease-in-out infinite;
-        margin-right: 10px;
-      }
-      @keyframes spin {
-        to {
-          transform: rotate(360deg);
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <div class="logo">⚽ Passa a Bola</div>
-      <div class="subtitle">Women's Football Network</div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passa a Bola - Rede Social do Futebol Feminino</title>
+    <meta name="description" content="Rede social para o futebol feminino - Conectando atletas, olheiros e fãs">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/output.css">
+</head>
+<body class="min-h-screen bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-gradient-to-r from-pink-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-lg">⚽</span>
+                        </div>
+                        <span class="text-xl font-bold text-gray-900">Passa a Bola</span>
+                    </a>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="text-gray-700 hover:text-pink-600 font-medium transition-colors">Home</a>
+                    <a href="#players" class="text-gray-700 hover:text-pink-600 font-medium transition-colors">Jogadoras</a>
+                    <a href="#teams" class="text-gray-700 hover:text-pink-600 font-medium transition-colors">Times</a>
+                    <a href="#news" class="text-gray-700 hover:text-pink-600 font-medium transition-colors">Notícias</a>
+                    <a href="#community" class="text-gray-700 hover:text-pink-600 font-medium transition-colors">Comunidade</a>
+                    <a href="#shop" class="text-gray-700 hover:text-pink-600 font-medium transition-colors">Loja</a>
+                </div>
+                
+                <!-- User Actions -->
+                <div class="flex items-center space-x-4">
+                    <a href="#login" class="text-gray-700 hover:text-pink-600 font-medium transition-colors">Entrar</a>
+                    <a href="#register" class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-4 py-2 rounded-lg font-medium hover:from-pink-600 hover:to-purple-700 transition-all">Cadastrar</a>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-      <div id="loading" style="display: block">
-        <div class="spinner"></div>
-        Carregando aplicação...
-      </div>
+    <!-- Main Content -->
+    <main class="flex-1">
+        <!-- Hero Section -->
+        <section id="home" class="bg-gradient-to-r from-pink-500 to-purple-600 text-white py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                    Conectando o Futebol Feminino
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 opacity-90">
+                    A rede social que une atletas, olheiros e fãs do futebol feminino brasileiro
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#players" class="bg-white text-pink-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                        Ver Jogadoras
+                    </a>
+                    <a href="#teams" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-pink-600 transition-colors">
+                        Explorar Times
+                    </a>
+                </div>
+            </div>
+        </section>
 
-      <div id="content" style="display: none">
-        <p>🚀 <strong>Aplicação Node.js em execução!</strong></p>
-        <p>Conectando atletas, olheiros e fãs do futebol feminino</p>
+        <!-- Stats Section -->
+        <section class="py-16 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                    <div class="stat-item">
+                        <div class="text-3xl md:text-4xl font-bold text-pink-600 mb-2" id="totalPlayers">0</div>
+                        <div class="text-gray-600">Jogadoras</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="text-3xl md:text-4xl font-bold text-purple-600 mb-2" id="totalTeams">0</div>
+                        <div class="text-gray-600">Times</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="text-3xl md:text-4xl font-bold text-pink-600 mb-2" id="totalFans">0</div>
+                        <div class="text-gray-600">Fãs</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="text-3xl md:text-4xl font-bold text-purple-600 mb-2" id="totalScouts">0</div>
+                        <div class="text-gray-600">Olheiros</div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <div style="margin: 2rem 0">
-          <a href="#" id="app-link" class="btn btn-primary">Acessar Aplicação</a>
-          <a href="https://github.com/Bola-pra-frente/Front-end-web-app" class="btn" target="_blank"
-            >Ver Código no GitHub</a
-          >
+        <!-- Players Section -->
+        <section id="players" class="py-16 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Nossas Jogadoras</h2>
+                    <p class="text-xl text-gray-600">Conheça as estrelas do futebol feminino brasileiro</p>
+                </div>
+                
+                <!-- Loading -->
+                <div id="loadingPlayers" class="text-center py-8">
+                    <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-pink-600"></div>
+                    <p class="mt-2 text-gray-600">Carregando jogadoras...</p>
+                </div>
+                
+                <!-- Players Grid -->
+                <div id="playersGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 hidden">
+                    <!-- Players will be loaded here -->
+                </div>
+                
+                <!-- Empty State -->
+                <div id="noPlayers" class="text-center py-12 hidden">
+                    <div class="text-6xl mb-4">⚽</div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Nenhuma jogadora encontrada</h3>
+                    <p class="text-gray-600">Tente novamente mais tarde.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Teams Section -->
+        <section id="teams" class="py-16 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Times Brasileiros</h2>
+                    <p class="text-xl text-gray-600">Os principais clubes do futebol feminino</p>
+                </div>
+                
+                <!-- Loading -->
+                <div id="loadingTeams" class="text-center py-8">
+                    <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-pink-600"></div>
+                    <p class="mt-2 text-gray-600">Carregando times...</p>
+                </div>
+                
+                <!-- Teams Grid -->
+                <div id="teamsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 hidden">
+                    <!-- Teams will be loaded here -->
+                </div>
+                
+                <!-- Empty State -->
+                <div id="noTeams" class="text-center py-12 hidden">
+                    <div class="text-6xl mb-4">🏆</div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Nenhum time encontrado</h3>
+                    <p class="text-gray-600">Tente novamente mais tarde.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- News Section -->
+        <section id="news" class="py-16 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Últimas Notícias</h2>
+                    <p class="text-xl text-gray-600">Fique por dentro do futebol feminino</p>
+                </div>
+                
+                <!-- Loading -->
+                <div id="loadingNews" class="text-center py-8">
+                    <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-pink-600"></div>
+                    <p class="mt-2 text-gray-600">Carregando notícias...</p>
+                </div>
+                
+                <!-- News Grid -->
+                <div id="newsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 hidden">
+                    <!-- News will be loaded here -->
+                </div>
+                
+                <!-- Empty State -->
+                <div id="noNews" class="text-center py-12 hidden">
+                    <div class="text-6xl mb-4">📰</div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Nenhuma notícia encontrada</h3>
+                    <p class="text-gray-600">Tente novamente mais tarde.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Shop Section -->
+        <section id="shop" class="py-16 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Loja</h2>
+                    <p class="text-xl text-gray-600">Produtos oficiais do futebol feminino</p>
+                </div>
+                
+                <!-- Loading -->
+                <div id="loadingProducts" class="text-center py-8">
+                    <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-pink-600"></div>
+                    <p class="mt-2 text-gray-600">Carregando produtos...</p>
+                </div>
+                
+                <!-- Products Grid -->
+                <div id="productsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 hidden">
+                    <!-- Products will be loaded here -->
+                </div>
+                
+                <!-- Empty State -->
+                <div id="noProducts" class="text-center py-12 hidden">
+                    <div class="text-6xl mb-4">🛍️</div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Nenhum produto encontrado</h3>
+                    <p class="text-gray-600">Tente novamente mais tarde.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Community Section -->
+        <section id="community" class="py-16 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Comunidade</h2>
+                <p class="text-xl text-gray-600 mb-8">Conecte-se com outros fãs do futebol feminino</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="text-4xl mb-4">💬</div>
+                        <h3 class="text-xl font-semibold mb-2">Discussões</h3>
+                        <p class="text-gray-600">Participe de conversas sobre o futebol feminino</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="text-4xl mb-4">📊</div>
+                        <h3 class="text-xl font-semibold mb-2">Estatísticas</h3>
+                        <p class="text-gray-600">Acompanhe dados e performance das jogadoras</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="text-4xl mb-4">🎯</div>
+                        <h3 class="text-xl font-semibold mb-2">Olheiros</h3>
+                        <p class="text-gray-600">Conecte-se com profissionais do esporte</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- About -->
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-r from-pink-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-lg">⚽</span>
+                        </div>
+                        <span class="text-xl font-bold">Passa a Bola</span>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        Conectando atletas, olheiros e fãs do futebol feminino. 
+                        Uma plataforma dedicada a dar visibilidade ao esporte que amamos.
+                    </p>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Links Rápidos</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#players" class="text-gray-300 hover:text-white transition-colors">Jogadoras</a></li>
+                        <li><a href="#teams" class="text-gray-300 hover:text-white transition-colors">Times</a></li>
+                        <li><a href="#community" class="text-gray-300 hover:text-white transition-colors">Comunidade</a></li>
+                        <li><a href="#shop" class="text-gray-300 hover:text-white transition-colors">Loja</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Support -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Suporte</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Contato</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Ajuda</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Privacidade</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Termos</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2024 Passa a Bola. Todos os direitos reservados.</p>
+            </div>
         </div>
+    </footer>
 
-        <div class="info">
-          <h3>📋 Funcionalidades:</h3>
-          <ul style="text-align: left; display: inline-block">
-            <li>✅ Autenticação JWT</li>
-            <li>✅ CRUD de Jogadoras e Times</li>
-            <li>✅ Comunidade e Loja</li>
-            <li>✅ API REST completa</li>
-            <li>✅ Documentação OpenAPI</li>
-            <li>✅ Testes unitários</li>
-          </ul>
-        </div>
-      </div>
-
-      <div id="error" style="display: none; color: #ff6b6b">
-        <p>⚠️ Aplicação não está rodando localmente</p>
-        <p>Para testar localmente:</p>
-        <code
-          style="
-            background: rgba(0, 0, 0, 0.2);
-            padding: 0.5rem;
-            border-radius: 4px;
-            display: block;
-            margin: 1rem 0;
-          "
-        >
-          npm install<br />
-          npm run dev
-        </code>
-      </div>
-    </div>
-
+    <!-- JavaScript -->
+    <script src="/js/home.js"></script>
+    <script src="/js/players.js"></script>
+    <script src="/js/teams.js"></script>
+    <script src="/js/news.js"></script>
+    <script src="/js/shop.js"></script>
+    
     <script>
-      // Tentar conectar com a aplicação local
-      const checkApp = async () => {
-        try {
-          const response = await fetch('http://localhost:3000', {
-            method: 'HEAD',
-            mode: 'no-cors',
-          });
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
 
-          document.getElementById('loading').style.display = 'none';
-          document.getElementById('content').style.display = 'block';
-          document.getElementById('app-link').href = 'http://localhost:3000';
-        } catch (error) {
-          document.getElementById('loading').style.display = 'none';
-          document.getElementById('error').style.display = 'block';
-        }
-      };
-
-      // Verificar se está rodando localmente
-      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-        checkApp();
-      } else {
-        // Se estiver no GitHub Pages, mostrar informações sobre deploy
-        document.getElementById('loading').style.display = 'none';
-        document.getElementById('content').style.display = 'block';
-
-        // Atualizar links para produção
-        document.getElementById('app-link').textContent = 'Ver Aplicação na Vercel';
-        document.getElementById('app-link').href =
-          'https://front-end-web-ecxrdjick-matheus-xaviers-projects-d17e8510.vercel.app'; // URL da Vercel
-
-        // Adicionar informações sobre deploy
-        const deployInfo = document.createElement('div');
-        deployInfo.className = 'info';
-        deployInfo.innerHTML = `
-                <h3>🚀 Deploy em Produção:</h3>
-                <p>Esta aplicação Node.js precisa ser hospedada em uma plataforma como:</p>
-                <ul style="text-align: left; display: inline-block;">
-                    <li><a href="https://heroku.com" target="_blank" style="color: #87CEEB;">Heroku</a></li>
-                    <li><a href="https://vercel.com" target="_blank" style="color: #87CEEB;">Vercel</a></li>
-                    <li><a href="https://railway.app" target="_blank" style="color: #87CEEB;">Railway</a></li>
-                    <li><a href="https://render.com" target="_blank" style="color: #87CEEB;">Render</a></li>
-                </ul>
-            `;
-        document.querySelector('.container').appendChild(deployInfo);
-      }
+        // Load all data on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load stats
+            loadStats();
+            
+            // Load players
+            loadPlayers();
+            
+            // Load teams
+            loadTeams();
+            
+            // Load news
+            loadNews();
+            
+            // Load products
+            loadProducts();
+        });
     </script>
-  </body>
+</body>
 </html>
